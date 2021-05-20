@@ -1,0 +1,94 @@
+{
+  "name": "alefesouza/laravel-vue-boilerplate",
+  "description": "A Laravel 8 SPA boilerplate with a users CRUD using Vue.js 2.6, Bootstrap 4, TypeScript, Sass and Pug.",
+  "keywords": [
+    "laravel",
+    "vue",
+    "boilerplate",
+    "typescript",
+    "sass",
+    "scss",
+    "pug",
+    "jest"
+  ],
+  "authors": [{
+      "name": "Alefe Souza",
+      "email": "contact@alefesouza.com",
+      "homepage": "https://alefesouza.com"
+    },
+    {
+      "name": "The Laravel Framework",
+      "homepage": "https://laravel.com"
+    }
+  ],
+  "license": "MIT",
+  "type": "project",
+  "require": {
+    "php": "^7.3|^8.0",
+    "fideloper/proxy": "^4.4",
+    "fruitcake/laravel-cors": "^2.0",
+    "guzzlehttp/guzzle": "^7.0.1",
+    "laravel/framework": "^8.40",
+    "laravel/sanctum": "^2.10",
+    "laravel/tinker": "^2.5",
+    "laravel/ui": "^3.2",
+    "pusher/pusher-php-server": "~6.1",
+    "rebing/graphql-laravel": "^7.2",
+    "spatie/laravel-http-logger": "^1.7"
+  },
+  "require-dev": {
+    "alefesouza/laravel-vue-i18n-generator": "^0.2",
+    "facade/ignition": "^2.5",
+    "fakerphp/faker": "^1.9.1",
+    "laravel/sail": "^1.0.1",
+    "mockery/mockery": "^1.4.2",
+    "nunomaduro/collision": "^5.0",
+    "phpunit/phpunit": "^9.3.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "Database\\Factories\\": "database/factories/",
+      "Database\\Seeders\\": "database/seeders/"
+    },
+    "files": ["app/Http/helpers.php"]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/php/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "dont-discover": []
+    }
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+    ],
+    "post-create-project-cmd": ["@php artisan key:generate"],
+    "post-autoload-dump": [
+      "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+      "@php artisan package:discover"
+    ],
+    "test": "\"vendor/bin/phpunit\"",
+    "key:generate": "php artisan key:generate && php artisan key:generate --env=testing",
+    "permissions": "chgrp -R www-data storage bootstrap/cache && chmod -R ug+rwx storage bootstrap/cache",
+    "start": [
+      "@composer run env:copy",
+      "@composer install -n --prefer-dist",
+      "@composer run key:generate",
+      "@php artisan vue-i18n:generate",
+      "@php artisan migrate --seed",
+      "@composer run permissions"
+    ]
+  },
+  "config": {
+      "optimize-autoloader": true,
+      "preferred-install": "dist",
+      "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
